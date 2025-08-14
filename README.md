@@ -1,0 +1,1 @@
+Spendio is a finance tracking app that allows you to add a budget, log expenses, and log subscriptions.
