@@ -43,8 +43,19 @@ jobs:
             git fetch --all
             git reset --hard origin/main
 
-            # activate venv (tries env/, then venv/)
-            if [ -f env/bin/activate ]; then source env/bin/activate; elif [ -f venv/bin/activate ]; then source venv/bin/activate; fi
+            # activate venv (tries venv/, then env/)
+            if [ -f venv/bin/activate ]; then 
+                source venv/bin/activate
+                echo "Activated venv/ virtual environment"
+            elif [ -f env/bin/activate ]; then 
+                source env/bin/activate
+                echo "Activated env/ virtual environment"
+            else
+                echo "No virtual environment found, creating one..."
+                python3 -m venv venv
+                source venv/bin/activate
+                echo "Created and activated new venv/ virtual environment"
+            fi
 
             pip install -r backend/requirements.txt
             python backend/manage.py migrate --noinput
