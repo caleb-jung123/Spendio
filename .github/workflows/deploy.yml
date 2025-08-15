@@ -14,6 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Debug runner IP and connectivity
+        run: |
+          echo "Runner public IP:"
+          curl -s https://api.ipify.org
+          echo "Testing connectivity to SSH host:"
+          nc -zv ${{ secrets.SSH_HOST }} ${{ secrets.SSH_PORT }} || echo "Connection failed"
+          echo "DNS resolution:"
+          nslookup ${{ secrets.SSH_HOST }} || echo "DNS lookup failed"
+
       - name: Prepare SSH and known_hosts
         run: |
           mkdir -p ~/.ssh
