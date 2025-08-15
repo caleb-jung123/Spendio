@@ -1,0 +1,49 @@
+name: deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare SSH and known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Remote deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            cd ${{ secrets.PROJECT_PATH }}
+            git fetch --all
+            git reset --hard origin/main
+
+            # activate venv (tries env/, then venv/)
+            if [ -f env/bin/activate ]; then source env/bin/activate; elif [ -f venv/bin/activate ]; then source venv/bin/activate; fi
+
+            pip install -r backend/requirements.txt
+            python backend/manage.py migrate --noinput
+            python backend/manage.py collectstatic --noinput
+
+            cd frontend
+            npm ci
+            npm run build
+
+            sudo /usr/bin/systemctl restart spendio
+            sudo /usr/bin/systemctl reload nginx
