@@ -9,7 +9,23 @@ export const isAuthenticated = async (api) => {
 
 export const refreshToken = async (api) => {
     try {
-        const response = await api.post('api/token/refresh/')
+        const cookies = document.cookie.split(';')
+        let refreshToken = null
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=')
+            if (name === 'refresh_token') {
+                refreshToken = value
+                break
+            }
+        }
+        
+        if (!refreshToken) {
+            return false
+        }
+        
+        const response = await api.post('api/token/refresh/', {
+            refresh: refreshToken
+        })
         return response.status === 200
     } catch (error) {
         return false

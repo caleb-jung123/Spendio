@@ -69,6 +69,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,7 +77,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -171,27 +171,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+CORS_ALLOWED_ORIGINS = []
 
 if os.getenv("DOMAIN_NAME"):
     CORS_ALLOWED_ORIGINS.extend([
         f"https://{os.getenv('DOMAIN_NAME')}",
-        f"http://{os.getenv('DOMAIN_NAME')}",
     ])
 
 CSRF_COOKIE_SECURE = os.getenv("HTTPS_ENABLED", "False").lower() == "true"
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+CSRF_TRUSTED_ORIGINS = []
 
 if os.getenv("DOMAIN_NAME"):
-    CSRF_TRUSTED_ORIGINS.append(f"https://{os.getenv('DOMAIN_NAME')}")
+    CSRF_TRUSTED_ORIGINS.extend([
+        f"https://{os.getenv('DOMAIN_NAME')}",
+    ])
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = os.getenv("HTTPS_ENABLED", "False").lower() == "true"

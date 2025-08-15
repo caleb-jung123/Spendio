@@ -25,7 +25,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                     access_token,
                     max_age=60 * 60,
                     httponly=True,
-                    secure=False,
+                    secure=True,
                     samesite='Lax'
                 )
                 response.set_cookie(
@@ -33,7 +33,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                     refresh_token,
                     max_age=24 * 60 * 60,
                     httponly=True,
-                    secure=False,
+                    secure=True,
                     samesite='Lax'
                 )
                 
@@ -55,7 +55,7 @@ class CookieTokenRefreshView(TokenRefreshView):
                     access_token,
                     max_age=60 * 60,
                     httponly=True,
-                    secure=False,
+                    secure=True,
                     samesite='Lax'
                 )
                 
