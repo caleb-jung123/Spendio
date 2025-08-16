@@ -3,7 +3,7 @@ Spendio is a full-stack web application that allows users to track expenses, sub
 It has been built with mainly Django for the backend and React.js for the frontend
 
 # Features
-- User authetnication using JWT tokens
+- User authentication using JWT tokens
 - Log expenses
 - Log subsciprtions
 - Monthly/Yearly summaries
