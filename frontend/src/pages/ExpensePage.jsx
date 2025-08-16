@@ -3,9 +3,11 @@ import ExpenseList from "../components/ExpenseList"
 
 function ExpensePage() {
     return (
-        <div className="flex w-full h-screen">
+        <div className="flex w-full h-screen overflow-hidden">
             <NavBar />
-            <ExpenseList />
+            <div className="flex-1 overflow-auto">
+                <ExpenseList />
+            </div>
         </div>
     )
 }

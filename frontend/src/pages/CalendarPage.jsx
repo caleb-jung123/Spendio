@@ -3,9 +3,11 @@ import Calendar from "../components/Calendar"
 
 function CalendarPage() {
     return (
-        <div className="flex w-full h-screen">
+        <div className="flex w-full h-screen overflow-hidden">
             <NavBar />
-            <Calendar />
+            <div className="flex-1 overflow-auto">
+                <Calendar />
+            </div>
         </div>
     )
 }
