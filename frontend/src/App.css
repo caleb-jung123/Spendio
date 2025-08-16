@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.sidebar-transition {
+  transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out;
+}
+
+@media (max-width: 640px) {
+  .mobile-padding {
+    padding: 0.5rem;
+  }
+}

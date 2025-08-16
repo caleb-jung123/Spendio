@@ -3,9 +3,11 @@ import Dashboard from "../components/Dashboard"
 
 function Home() {
     return (
-        <div className="flex w-full h-screen">
+        <div className="flex w-full h-screen overflow-hidden">
             <NavBar />
-            <Dashboard />
+            <div className="flex-1 overflow-auto">
+                <Dashboard />
+            </div>
         </div>
     )
 }

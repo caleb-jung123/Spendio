@@ -1,4 +1,4 @@
-function NavBarButton( {name, icon, isActive, navFunc, path} ) {
+function NavBarButton( {name, icon, isActive, navFunc, path, isCollapsed = false} ) {
     const click = () => {
         if (!isActive) {
             navFunc(path)
@@ -9,7 +9,7 @@ function NavBarButton( {name, icon, isActive, navFunc, path} ) {
         }
     }
     
-    var classes = "w-full py-3 px-4 rounded-lg text-sm md:text-base font-medium transition-all duration-200 flex items-center "
+    var classes = `w-full py-3 rounded-lg text-sm md:text-base font-medium transition-all duration-200 flex items-center ${isCollapsed ? 'px-2 justify-center' : 'px-4'} `
     
     if (!isActive) {
         classes = classes + "hover:bg-gray-50 text-gray-600 hover:text-gray-900 "
@@ -24,9 +24,10 @@ function NavBarButton( {name, icon, isActive, navFunc, path} ) {
             className={classes} 
             onClick={click} 
             disabled={isActive}
+            title={isCollapsed ? name : undefined}
         >
-            <span className="mr-3 text-lg">{icon}</span>
-            {name}
+            <span className={`text-lg ${isCollapsed ? '' : 'mr-3'}`}>{icon}</span>
+            {!isCollapsed && name}
         </button>
     )
 }
