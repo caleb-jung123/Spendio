@@ -30,7 +30,7 @@ function NavBar() {
         <nav className={`font-semibold ${isCollapsed ? 'w-16' : 'w-64'} ${isCollapsed ? 'min-w-16' : 'min-w-64'} flex-shrink-0 flex flex-col items-center bg-white shadow-sm transition-all duration-300 relative ${isMobile ? 'mobile-padding' : 'p-4'} sidebar-transition`}>
             <button 
                 onClick={toggleCollapse}
-                className="absolute top-1/2 -translate-y-1/2 -right-3 w-6 h-10 flex items-center justify-center bg-white hover:bg-gray-50 rounded-r-lg border border-l-0 border-gray-200 transition-all duration-200 z-10 shadow-md"
+                className="absolute top-1/2 -translate-y-1/2 right-0 w-4 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-r-md border-r border-t border-b border-gray-300 transition-all duration-200 z-10 shadow-sm"
             >
                 <span className={`text-gray-500 transform transition-transform duration-300 text-sm ${isCollapsed ? 'rotate-180' : ''}`}>
                     ◀
@@ -48,7 +48,7 @@ function NavBar() {
             
             {!isCollapsed && <div className="border-b border-gray-100 w-full px-2 md:px-4"></div>}
             
-            <div className={`font-sans w-full flex flex-col items-center bg-white gap-2 md:gap-3 flex-1 ${isCollapsed ? 'mt-2' : 'mt-4'}`}>
+            <div className={`font-sans w-full flex flex-col items-center gap-2 md:gap-3 flex-1 ${isCollapsed ? 'mt-2' : 'mt-4'}`}>
                 <NavBarButton 
                     name="Home" 
                     icon="🏠"
