@@ -86,13 +86,6 @@ jobs:
 
             pip install -r backend/requirements.txt
             
-            if [ -f backend/.env.staging ]; then
-                export $(cat backend/.env.staging | grep -v '^#' | xargs)
-                echo "Loaded environment variables from backend/.env.staging"
-            else
-                echo "Warning: backend/.env.staging file not found"
-            fi
-            
             export DJANGO_SETTINGS_MODULE=backend.settings_staging
             python backend/manage.py migrate --noinput
             python backend/manage.py collectstatic --noinput
