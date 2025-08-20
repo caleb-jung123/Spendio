@@ -86,13 +86,6 @@ jobs:
 
             pip install -r backend/requirements.txt
             
-            if [ -f backend/.env.production ]; then
-                export $(cat backend/.env.production | grep -v '^#' | xargs)
-                echo "Loaded environment variables from backend/.env.production"
-            else
-                echo "Warning: backend/.env.production file not found"
-            fi
-            
             export DJANGO_SETTINGS_MODULE=backend.settings
             python backend/manage.py migrate --noinput
             python backend/manage.py collectstatic --noinput
@@ -102,27 +95,27 @@ jobs:
             npm run build
 
             echo "Restarting spendio service..."
-            sudo -n /usr/bin/systemctl restart spendio || {
+            sudo /usr/bin/systemctl restart spendio || {
                 echo "Failed to restart spendio service. Checking status..."
-                sudo -n systemctl status spendio.service
+                sudo systemctl status spendio.service
                 echo "Recent logs:"
-                sudo -n journalctl -u spendio.service --no-pager -n 20
+                sudo journalctl -u spendio.service --no-pager -n 20
                 exit 1
             }
             echo "Spendio service restarted successfully"
             
             echo "Testing nginx configuration..."
-            sudo -n nginx -t || {
+            sudo nginx -t || {
                 echo "Nginx configuration test failed. Exiting deployment."
                 exit 1
             }
             
             echo "Reloading nginx..."
-            sudo -n /usr/bin/systemctl reload nginx || {
+            sudo /usr/bin/systemctl reload nginx || {
                 echo "Failed to reload nginx. Checking status..."
-                sudo -n systemctl status nginx.service
+                sudo systemctl status nginx.service
                 echo "Recent nginx logs:"
-                sudo -n journalctl -u nginx.service --no-pager -n 10
+                sudo journalctl -u nginx.service --no-pager -n 10
                 exit 1
             }
             echo "Nginx reloaded successfully"
