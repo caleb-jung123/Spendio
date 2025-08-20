@@ -85,6 +85,15 @@ jobs:
             fi
 
             pip install -r backend/requirements.txt
+            
+            if [ -f backend/.env.production ]; then
+                export $(cat backend/.env.production | grep -v '^#' | xargs)
+                echo "Loaded environment variables from backend/.env.production"
+            else
+                echo "Warning: backend/.env.production file not found"
+            fi
+            
+            export DJANGO_SETTINGS_MODULE=backend.settings
             python backend/manage.py migrate --noinput
             python backend/manage.py collectstatic --noinput
 
