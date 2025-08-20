@@ -25,9 +25,11 @@ jobs:
           echo "Runner IP: $RUNNER_IP"
           echo "RUNNER_IP=$RUNNER_IP" >> $GITHUB_ENV
           
+          # Create unique rule name with timestamp
           RULE_NAME="GitHubActions-Staging-$(date +%s)"
           echo "RULE_NAME=$RULE_NAME" >> $GITHUB_ENV
           
+          # Add IP to Azure NSG
           az network nsg rule create \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --nsg-name ${{ secrets.AZURE_NSG_NAME }} \
@@ -40,6 +42,14 @@ jobs:
             --direction Inbound \
             --description "GitHub Actions staging SSH access"
 
+      - name: Debug runner IP and connectivity
+        run: |
+          echo "Runner public IP: $RUNNER_IP"
+          echo "Testing connectivity to SSH host:"
+          nc -zv ${{ secrets.SSH_HOST }} ${{ secrets.SSH_PORT }} || echo "Connection failed"
+          echo "DNS resolution:"
+          nslookup ${{ secrets.SSH_HOST }} || echo "DNS lookup failed"
+
       - name: Prepare SSH and known_hosts
         run: |
           mkdir -p ~/.ssh
@@ -47,7 +57,7 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Remote deploy staging
+      - name: Remote deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -60,6 +70,7 @@ jobs:
             git fetch --all
             git reset --hard origin/staging
 
+            # activate venv (tries venv/, then env/)
             if [ -f venv/bin/activate ]; then 
                 source venv/bin/activate
                 echo "Activated venv/ virtual environment"
@@ -85,7 +96,7 @@ jobs:
             sudo /usr/bin/systemctl reload nginx
 
       - name: Remove runner IP from Azure NSG
-        if: always()
+        if: always()  # This ensures it runs even if deployment fails
         run: |
           if [ -n "$RULE_NAME" ]; then
             az network nsg rule delete \

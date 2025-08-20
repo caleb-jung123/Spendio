@@ -1,9 +1,14 @@
 from .settings import *
 import os
+from dotenv import load_dotenv
+
+load_dotenv('.env.staging')
+
+SECRET_KEY=os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = []
 if os.getenv("STAGING_DOMAIN_NAME"):
     ALLOWED_HOSTS.append(os.getenv("STAGING_DOMAIN_NAME"))
 
