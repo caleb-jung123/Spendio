@@ -1,8 +1,9 @@
 from .settings import *
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
-load_dotenv('.env.staging')
+load_dotenv(os.path.join(Path(__file__).resolve().parent.parent, '.env.staging'))
 
 SECRET_KEY=os.getenv("DJANGO_SECRET_KEY")
 
