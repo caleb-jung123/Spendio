@@ -2,7 +2,7 @@ import axios from "axios"
 import { getCSRFToken } from "./utils/auth"
 
 const api = axios.create({
-    baseURL: "",
+    baseURL: import.meta.env.VITE_URL || "",
     withCredentials: true  
 })
 
