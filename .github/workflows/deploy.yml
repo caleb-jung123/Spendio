@@ -101,8 +101,32 @@ jobs:
             npm ci
             npm run build
 
-            sudo /usr/bin/systemctl restart spendio
-            sudo /usr/bin/systemctl reload nginx
+            echo "Restarting spendio service..."
+            sudo /usr/bin/systemctl restart spendio || {
+                echo "Failed to restart spendio service. Checking status..."
+                sudo systemctl status spendio.service
+                echo "Recent logs:"
+                sudo journalctl -u spendio.service --no-pager -n 20
+                exit 1
+            }
+            echo "Spendio service restarted successfully"
+            
+            echo "Testing nginx configuration..."
+            sudo nginx -t || {
+                echo "Nginx configuration test failed. Exiting deployment."
+                exit 1
+            }
+            
+            echo "Reloading nginx..."
+            sudo /usr/bin/systemctl reload nginx || {
+                echo "Failed to reload nginx. Checking status..."
+                sudo systemctl status nginx.service
+                echo "Recent nginx logs:"
+                sudo journalctl -u nginx.service --no-pager -n 10
+                exit 1
+            }
+            echo "Nginx reloaded successfully"
+            echo "Deployment completed successfully!"
 
       - name: Remove runner IP from Azure NSG
         if: always()  # This ensures it runs even if deployment fails
