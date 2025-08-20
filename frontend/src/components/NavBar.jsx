@@ -30,7 +30,7 @@ function NavBar() {
         <nav className={`font-semibold ${isCollapsed ? 'w-16' : 'w-64'} ${isCollapsed ? 'min-w-16' : 'min-w-64'} flex-shrink-0 flex flex-col items-center bg-white shadow-sm transition-all duration-300 relative ${isMobile ? 'mobile-padding' : 'p-4'} sidebar-transition`}>
             <button 
                 onClick={toggleCollapse}
-                className="absolute top-4 right-2 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors duration-200 z-10"
+                className="absolute top-1/2 -translate-y-1/2 -right-4 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full transition-colors duration-200 z-10 shadow-md"
             >
                 <span className={`text-gray-600 transform transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}>
                     ◀
