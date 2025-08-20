@@ -27,10 +27,10 @@ function NavBar() {
     }
 
     return (
-        <nav className={`font-semibold ${isCollapsed ? 'w-16' : 'w-64'} ${isCollapsed ? 'min-w-16' : 'min-w-64'} flex-shrink-0 flex flex-col items-center bg-white shadow-sm transition-all duration-300 relative ${isMobile ? 'mobile-padding' : 'p-4'} sidebar-transition`}>
+        <nav className={`font-semibold ${isCollapsed ? 'w-16' : 'w-64'} ${isCollapsed ? 'min-w-16' : 'min-w-64'} flex-shrink-0 flex flex-col items-center bg-white border-r border-gray-200 shadow-sm transition-all duration-300 relative ${isMobile ? 'mobile-padding' : 'p-4'} sidebar-transition`}>
             <button 
                 onClick={toggleCollapse}
-                className="absolute top-1/2 -translate-y-1/2 right-0 w-4 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-r-md border-r border-t border-b border-gray-300 transition-all duration-200 z-10 shadow-sm"
+                className="absolute top-1/2 -translate-y-1/2 -right-4 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full border border-gray-300 transition-colors duration-200 z-20 shadow-md"
             >
                 <span className={`text-gray-500 transform transition-transform duration-300 text-sm ${isCollapsed ? 'rotate-180' : ''}`}>
                     ◀
