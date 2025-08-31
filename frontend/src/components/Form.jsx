@@ -21,7 +21,7 @@ function Form({action}) {
             if (isLogin) {
                 const res = await api.post("api/token/", {username, password})
                 localStorage.setItem("username", username)
-                navigate("/")
+                navigate("/home")
             }
             else {
                 await api.post("api/user/register/", {username, password})

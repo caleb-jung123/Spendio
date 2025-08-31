@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import './App.css'
+import Landing from './pages/Landing'
 import Home from './pages/Home'
 import ExpensePage from './pages/ExpensePage'
 import CalendarPage from './pages/CalendarPage'
@@ -24,7 +25,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Lock><Home /></Lock>} />
+                <Route path="/" element={<Landing />} />
+                <Route path="/home" element={<Lock><Home /></Lock>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<RegisterAndLogout />} />
                 <Route path="/logout" element={<Logout />} />

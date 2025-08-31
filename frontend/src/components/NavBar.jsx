@@ -52,9 +52,9 @@ function NavBar() {
                 <NavBarButton 
                     name="Home" 
                     icon="🏠"
-                    isActive={location.pathname == "/"} 
+                    isActive={location.pathname == "/home"} 
                     navFunc={navigate} 
-                    path={"/"} 
+                    path={"/home"} 
                     isCollapsed={isCollapsed}
                 />
                 
