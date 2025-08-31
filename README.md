@@ -15,7 +15,7 @@ It has been built with mainly Django for the backend and React.js for the fronte
 - Deployment: Azure (Virtual Machine)
 
 # Website Link
-- spendio.ca
+- [spendio.ca](https://spendio.ca)
 
 # Attribution
 - Favicon.png generated using Twemoji, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
