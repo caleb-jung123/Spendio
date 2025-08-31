@@ -152,7 +152,7 @@ function Dashboard() {
     }
 
     return (
-        <div className="flex-1 flex flex-col overflow-auto bg-gradient-to-br from-blue-50/30 via-white to-purple-50/30 p-4 md:p-6 relative">
+        <div className="flex-1 flex flex-col overflow-auto bg-gray-50 p-4 md:p-6 relative">
             <div className="w-full px-2 md:px-4 py-4 md:py-6 relative">
                 <div className="flex flex-col space-y-2">
                     <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
