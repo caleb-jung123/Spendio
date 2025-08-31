@@ -100,12 +100,17 @@ function Calendar() {
     }, [currentDate])
 
     return (
-        <div className="flex-1 flex flex-col overflow-auto bg-gray-50 p-4 md:p-6">
+        <div className="flex-1 flex flex-col overflow-auto bg-gradient-to-br from-blue-50/30 via-white to-cyan-50/30 p-4 md:p-6">
             <div className="w-full px-2 md:px-4 py-4 md:py-6 relative">
-                <h1 className="text-xl md:text-2xl font-semibold text-gray-800">Calendar</h1>
+                <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <span className="text-blue-600 text-lg">📅</span>
+                    </div>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Calendar</h1>
+                </div>
                 <button
                     onClick={() => setIsSettingsOpen(true)}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 text-gray-500 hover:text-gray-700"
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 hover:bg-white/80 rounded-lg transition-all duration-200 text-gray-500 hover:text-gray-700 hover:shadow-sm"
                     title="Settings"
                 >
                     <span className="text-black text-lg">⚙️</span>

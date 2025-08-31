@@ -114,12 +114,17 @@ function ExpenseList() {
     const filteredTotal = getFilteredTotal()
 
     return (
-        <div className="flex-1 flex flex-col overflow-auto bg-gray-50 p-4 md:p-6">
+        <div className="flex-1 flex flex-col overflow-auto bg-gradient-to-br from-orange-50/30 via-white to-amber-50/30 p-4 md:p-6">
             <div className="w-full px-2 md:px-4 py-4 md:py-6 relative">
-                <h1 className="text-xl md:text-2xl font-semibold text-gray-800">Expenses</h1>
+                <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <span className="text-orange-600 text-lg">💰</span>
+                    </div>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Expenses</h1>
+                </div>
                 <button
                     onClick={() => setIsSettingsOpen(true)}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 text-gray-500 hover:text-gray-700"
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 hover:bg-white/80 rounded-lg transition-all duration-200 text-gray-500 hover:text-gray-700 hover:shadow-sm"
                     title="Settings"
                 >
                     <span className="text-black text-lg">⚙️</span>
@@ -129,11 +134,16 @@ function ExpenseList() {
             <div className="border-b border-gray-100 w-full px-2 md:px-4"></div>  
 
             <div className="flex flex-col gap-6 mt-4">
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl shadow-sm border border-orange-100 p-4 md:p-6">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <div>
-                            <p className="text-gray-500 text-xs md:text-sm font-medium">Total Expenses</p>
-                            <p className="text-3xl md:text-4xl font-bold text-gray-900">${parseFloat(filteredTotal || 0).toFixed(2)}</p>
+                        <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <span className="text-orange-600 text-xl">💰</span>
+                            </div>
+                            <div>
+                                <p className="text-orange-700 text-xs md:text-sm font-medium">Total Expenses</p>
+                                <p className="text-3xl md:text-4xl font-bold text-orange-800">${parseFloat(filteredTotal || 0).toFixed(2)}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -216,7 +226,7 @@ function ExpenseList() {
                         <h2 className="text-lg md:text-xl font-semibold text-gray-900">Your Expenses</h2>
                         <button 
                             onClick={() => setIsExpenseFormOpen(true)}
-                            className="bg-black hover:bg-gray-800 text-white text-xs md:text-sm px-4 md:px-6 py-2 md:py-3 rounded-lg shadow-sm transition-colors duration-200 font-medium"
+                            className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white text-xs md:text-sm px-4 md:px-6 py-2 md:py-3 rounded-lg shadow-sm transition-all duration-200 font-medium transform hover:scale-105"
                         >
                             + Add Expense
                         </button>
@@ -224,7 +234,7 @@ function ExpenseList() {
 
                     {loading ? (
                         <div className="flex justify-center items-center py-12">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
                         </div>
                     ) : filteredExpenses.length === 0 ? (
                         <div className="text-center py-8">
