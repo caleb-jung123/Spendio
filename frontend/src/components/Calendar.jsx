@@ -154,7 +154,7 @@ function Calendar() {
                                     dayData.isEmpty 
                                         ? 'bg-gray-50' 
                                         : 'bg-white hover:bg-gray-50 cursor-pointer'
-                                } ${dayData.expenses.length > 0 || dayData.subscriptions.length > 0 ? 'ring-2 ring-blue-200' : ''}`}
+                                } ${dayData.expenses.length > 0 || dayData.subscriptions.length > 0 ? 'ring-2 ring-blue-200 bg-blue-50' : ''}`}
                             >
                                 {!dayData.isEmpty && (
                                     <>
@@ -162,12 +162,12 @@ function Calendar() {
                                             {dayData.day}
                                         </div>
                                         {dayData.expenses.map((expense, i) => (
-                                            <div key={i} className="text-xs bg-gray-300 text-black px-1 py-0.5 rounded mb-1 truncate">
+                                            <div key={i} className="text-xs bg-orange-100 text-orange-800 px-1 py-0.5 rounded mb-1 truncate border border-orange-200">
                                                 💰 {expense.title}
                                             </div>
                                         ))}
                                         {dayData.subscriptions.map((subscription, i) => (
-                                            <div key={i} className="text-xs bg-gray-400 text-black px-1 py-0.5 rounded mb-1 truncate">
+                                            <div key={i} className="text-xs bg-purple-100 text-purple-800 px-1 py-0.5 rounded mb-1 truncate border border-purple-200">
                                                 📱 {subscription.title}
                                             </div>
                                         ))}
@@ -179,41 +179,43 @@ function Calendar() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
+                    <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl shadow-sm border border-orange-100 p-4 md:p-6">
                         <div className="flex items-center justify-between mb-2">
-                            <p className="text-sm text-gray-500 font-medium">Total Expenses in {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
-                            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                                <span className="text-black text-xs">💰</span>
+                            <p className="text-sm text-orange-700 font-medium">Total Expenses in {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                            <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <span className="text-orange-600 text-xs">💰</span>
                             </div>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-orange-800">
                             ${parseFloat(calendarData.summary?.total_expenses || 0).toFixed(2)}
                         </p>
                     </div>
                     
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
+                    <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl shadow-sm border border-purple-100 p-4 md:p-6">
                         <div className="flex items-center justify-between mb-2">
-                            <p className="text-sm text-gray-500 font-medium">Subscriptions in {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
-                            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                                <span className="text-black text-xs">📱</span>
+                            <p className="text-sm text-purple-700 font-medium">Subscriptions in {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <span className="text-purple-600 text-xs">📱</span>
                             </div>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-purple-800">
                             ${parseFloat(calendarData.summary?.total_subscriptions || 0).toFixed(2)}
                         </p>
                     </div>
                     
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
+                    <div className={`${(calendarData.summary?.remaining_budget || 0) >= 0 ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-100' : 'bg-gradient-to-br from-red-50 to-pink-50 border-red-100'} rounded-2xl shadow-sm border p-4 md:p-6`}>
                         <div className="flex items-center justify-between mb-2">
-                            <p className="text-sm text-gray-500 font-medium">Remaining Budget for {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
-                            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                                <span className="text-black text-xs">🎯</span>
+                            <p className={`text-sm font-medium ${(calendarData.summary?.remaining_budget || 0) >= 0 ? 'text-green-700' : 'text-red-700'}`}>Remaining Budget for {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${(calendarData.summary?.remaining_budget || 0) >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+                                <span className={`text-xs ${(calendarData.summary?.remaining_budget || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>🎯</span>
                             </div>
                         </div>
-                        <p className={`text-2xl font-bold ${(calendarData.summary?.remaining_budget || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        <p className={`text-2xl font-bold ${(calendarData.summary?.remaining_budget || 0) >= 0 ? 'text-green-800' : 'text-red-800'}`}>
                             ${parseFloat(calendarData.summary?.remaining_budget || 0).toFixed(2)}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">After expenses & subscriptions</p>
+                        <p className={`text-xs mt-1 ${(calendarData.summary?.remaining_budget || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {(calendarData.summary?.remaining_budget || 0) >= 0 ? 'Great job staying on track!' : 'Consider adjusting your budget'}
+                        </p>
                     </div>
                 </div>
 
@@ -221,16 +223,16 @@ function Calendar() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Legend</h3>
                     <div className="flex flex-wrap gap-4">
                         <div className="flex items-center">
-                            <div className="w-4 h-4 bg-gray-300 rounded mr-2"></div>
-                            <span className="text-sm text-gray-600">Expenses</span>
+                            <div className="w-4 h-4 bg-orange-100 border border-orange-200 rounded mr-2"></div>
+                            <span className="text-sm text-orange-700 font-medium">💰 Expenses</span>
                         </div>
                         <div className="flex items-center">
-                            <div className="w-4 h-4 bg-gray-400 rounded mr-2"></div>
-                            <span className="text-sm text-gray-600">Subscriptions</span>
+                            <div className="w-4 h-4 bg-purple-100 border border-purple-200 rounded mr-2"></div>
+                            <span className="text-sm text-purple-700 font-medium">📱 Subscriptions</span>
                         </div>
                         <div className="flex items-center">
-                            <div className="w-4 h-4 bg-gray-200 rounded mr-2"></div>
-                            <span className="text-sm text-gray-600">Days with activity</span>
+                            <div className="w-4 h-4 bg-blue-100 border border-blue-200 rounded mr-2"></div>
+                            <span className="text-sm text-blue-700 font-medium">Days with activity</span>
                         </div>
                     </div>
                 </div>
@@ -253,12 +255,15 @@ function Calendar() {
                         
                         {selectedDate.expenses.length > 0 && (
                             <div className="mb-6">
-                                <h4 className="text-md font-medium text-gray-900 mb-3">Expenses</h4>
+                                <h4 className="text-md font-medium text-orange-800 mb-3 flex items-center">
+                                    <span className="mr-2">💰</span>
+                                    Expenses
+                                </h4>
                                 <div className="space-y-2">
                                     {selectedDate.expenses.map((expense, index) => (
-                                        <div key={index} className="flex justify-between items-center p-3 bg-gray-100 rounded-lg">
-                                            <span className="text-sm font-medium text-gray-900">{expense.title}</span>
-                                            <span className="text-sm font-bold text-black">-${parseFloat(expense.amount).toFixed(2)}</span>
+                                        <div key={index} className="flex justify-between items-center p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                                            <span className="text-sm font-medium text-orange-900">{expense.title}</span>
+                                            <span className="text-sm font-bold text-orange-800">-${parseFloat(expense.amount).toFixed(2)}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -267,12 +272,15 @@ function Calendar() {
                         
                         {selectedDate.subscriptions.length > 0 && (
                             <div>
-                                <h4 className="text-md font-medium text-gray-900 mb-3">Subscriptions</h4>
+                                <h4 className="text-md font-medium text-purple-800 mb-3 flex items-center">
+                                    <span className="mr-2">📱</span>
+                                    Subscriptions
+                                </h4>
                                 <div className="space-y-2">
                                     {selectedDate.subscriptions.map((subscription, index) => (
-                                        <div key={index} className="flex justify-between items-center p-3 bg-gray-100 rounded-lg">
-                                            <span className="text-sm font-medium text-gray-900">{subscription.title}</span>
-                                            <span className="text-sm font-bold text-black">-${parseFloat(subscription.amount).toFixed(2)}</span>
+                                        <div key={index} className="flex justify-between items-center p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                                            <span className="text-sm font-medium text-purple-900">{subscription.title}</span>
+                                            <span className="text-sm font-bold text-purple-800">-${parseFloat(subscription.amount).toFixed(2)}</span>
                                         </div>
                                     ))}
                                 </div>
