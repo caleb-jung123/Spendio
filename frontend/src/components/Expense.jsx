@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import CategoryBadge from './CategoryBadge'
 
 function Expense({ expense, onDelete }) {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -21,7 +22,7 @@ function Expense({ expense, onDelete }) {
             await onDelete(expense)
             setShowDeleteConfirm(false)
         } catch (error) {
-            // Silent fail for expense deletion
+            // Silent fail
         }
     }
 
@@ -43,9 +44,7 @@ function Expense({ expense, onDelete }) {
 
             <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-3">
-                    <span className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
-                        {expense.category}
-                    </span>
+                    <CategoryBadge category={expense.category} />
                     {expense.description && (
                         <p className="text-sm text-gray-600 truncate max-w-xs">
                             {expense.description}
