@@ -216,25 +216,25 @@ function Dashboard() {
                 </div>
                                 
                 <div className={`grid grid-cols-1 sm:grid-cols-2 ${timeFilter === 'this-year' ? 'lg:grid-cols-3 xl:grid-cols-5' : 'lg:grid-cols-4'} gap-4 md:gap-6`}>
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-sm border border-green-100 p-6 md:p-8 hover:shadow-lg hover:scale-105 transition-all duration-200 min-h-[160px] md:min-h-[180px] flex flex-col justify-center">
+                    <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl shadow-sm border border-emerald-100 p-6 md:p-8 hover:shadow-lg hover:scale-105 transition-all duration-200 min-h-[160px] md:min-h-[180px] flex flex-col justify-center">
                         <div className="flex items-center justify-between mb-4">
-                            <p className="text-xs sm:text-sm md:text-base text-green-700 font-medium">{getBudgetLabel()}</p>
-                            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                                <span className="text-green-600 text-sm">💚</span>
+                            <p className="text-xs sm:text-sm md:text-base text-emerald-700 font-medium">{getBudgetLabel()}</p>
+                            <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                <span className="text-emerald-600 text-sm">💚</span>
                             </div>
                         </div>
-                        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-green-800">${parseFloat(getBudgetAmount() || 0).toFixed(2)}</p>
+                        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-emerald-800">${parseFloat(getBudgetAmount() || 0).toFixed(2)}</p>
                         {getBudgetAmount() > 0 && (
                             <div className="mt-4">
-                                <div className="h-2 bg-green-200 rounded-full overflow-hidden">
+                                <div className="h-2 bg-emerald-200 rounded-full overflow-hidden">
                                     <div 
-                                        className="h-full bg-green-600 transition-all duration-500 rounded-full"
+                                        className="h-full bg-emerald-600 transition-all duration-500 rounded-full"
                                         style={{ 
                                             width: `${Math.min(((totalExpenses + totalSubscriptions) / getBudgetAmount()) * 100, 100)}%` 
                                         }}
                                     ></div>
                                 </div>
-                                <p className="text-xs text-green-700 mt-2">
+                                <p className="text-xs text-emerald-700 mt-2">
                                     {(((totalExpenses + totalSubscriptions) / getBudgetAmount()) * 100).toFixed(1)}% used
                                     <span className="block mt-0.5 opacity-75 text-[10px]">
                                         Expenses + projected subscriptions
@@ -242,6 +242,21 @@ function Dashboard() {
                                 </p>
                             </div>
                         )}
+                    </div>
+
+                    <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl shadow-sm border border-green-100 p-6 md:p-8 hover:shadow-lg hover:scale-105 transition-all duration-200 min-h-[160px] md:min-h-[180px] flex flex-col justify-center">
+                        <div className="flex items-center justify-between mb-4">
+                            <p className="text-xs sm:text-sm md:text-base text-green-700 font-medium">Remaining Budget</p>
+                            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                <span className="text-green-600 text-sm">🎯</span>
+                            </div>
+                        </div>
+                        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-green-800">
+                            ${parseFloat(getBudgetAmount() - totalExpenses - totalSubscriptions || 0).toFixed(2)}
+                        </p>
+                        <p className="text-xs mt-2 text-green-600">
+                            {(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'Great job staying on track!' : 'Consider adjusting your budget'}
+                        </p>
                     </div>
                     
                     <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl shadow-sm border border-orange-100 p-6 md:p-8 hover:shadow-lg hover:scale-105 transition-all duration-200 min-h-[160px] md:min-h-[180px] flex flex-col justify-center">
@@ -290,21 +305,6 @@ function Dashboard() {
                             </div>
                         </>
                     )}
-                    
-                    <div className={`${(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-100' : 'bg-gradient-to-br from-red-50 to-pink-50 border-red-100'} rounded-2xl shadow-sm border p-6 md:p-8 hover:shadow-lg hover:scale-105 transition-all duration-200 min-h-[160px] md:min-h-[180px] flex flex-col justify-center`}>
-                        <div className="flex items-center justify-between mb-4">
-                            <p className={`text-xs sm:text-sm md:text-base font-medium ${(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'text-green-700' : 'text-red-700'}`}>Remaining Budget</p>
-                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
-                                <span className={`text-sm ${(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'text-green-600' : 'text-red-600'}`}>🎯</span>
-                            </div>
-                        </div>
-                        <p className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ${(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'text-green-800' : 'text-red-800'}`}>
-                            ${parseFloat(getBudgetAmount() - totalExpenses - totalSubscriptions || 0).toFixed(2)}
-                        </p>
-                        <p className={`text-xs mt-1 ${(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {(getBudgetAmount() - totalExpenses - totalSubscriptions) >= 0 ? 'Great job staying on track!' : 'Consider adjusting your budget'}
-                        </p>
-                    </div>
                 </div>
             </div>
 
