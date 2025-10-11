@@ -224,6 +224,24 @@ function Dashboard() {
                             </div>
                         </div>
                         <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-green-800">${parseFloat(getBudgetAmount() || 0).toFixed(2)}</p>
+                        {getBudgetAmount() > 0 && (
+                            <div className="mt-4">
+                                <div className="h-2 bg-green-200 rounded-full overflow-hidden">
+                                    <div 
+                                        className="h-full bg-green-600 transition-all duration-500 rounded-full"
+                                        style={{ 
+                                            width: `${Math.min(((totalExpenses + totalSubscriptions) / getBudgetAmount()) * 100, 100)}%` 
+                                        }}
+                                    ></div>
+                                </div>
+                                <p className="text-xs text-green-700 mt-2">
+                                    {(((totalExpenses + totalSubscriptions) / getBudgetAmount()) * 100).toFixed(1)}% used
+                                    <span className="block mt-0.5 opacity-75 text-[10px]">
+                                        Expenses + projected subscriptions
+                                    </span>
+                                </p>
+                            </div>
+                        )}
                     </div>
                     
                     <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl shadow-sm border border-orange-100 p-6 md:p-8 hover:shadow-lg hover:scale-105 transition-all duration-200 min-h-[160px] md:min-h-[180px] flex flex-col justify-center">
